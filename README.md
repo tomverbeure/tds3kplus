@@ -8,7 +8,7 @@ The last official firmware for these oscilloscopes was version v3.41, released i
 be downloaded from their website. The images here are based on v3.41, but they have been patched to fix 
 bugs, enable locked-down features, or even add new features. 
 
-*They are unofficial, experimental, and absolutely not supported by Tektronix.
+**They are unofficial, experimental, and absolutely not supported by Tektronix.
 Use at your own risk and don't think about putting them on devices that are use in a professional
-settings: they were made by hobbyists and are supposed to be hobbyists only.*
+settings: they were made by hobbyists and are supposed to be hobbyists only.**
 
