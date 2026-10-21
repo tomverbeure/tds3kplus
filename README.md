@@ -72,7 +72,7 @@ Developmenet versions of NVSRAM guard have a *secret* test menu that can deliber
 corrupt the NVSRAM. When the Version status screen is active, press the "Select" 
 button 4 times in a row and a "Test" menu button will appear.
 
-![NVSRAM test menu](./pics/ncvsram_test_dialog.png)
+![NVSRAM test menu](./pics/nvsram_test_dialog.png)
 
 ## New Feature: Software Options Unlock
 
