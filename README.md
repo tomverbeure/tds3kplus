@@ -15,7 +15,12 @@ settings: they were made by hobbyists and are supposed to be hobbyists only.**
 
 **WORK IN PROGRESS:**
 
-# New Feature - Fast Boot
+Note all features are included in all firmware images. Use the 
+*TDS3Kplus Release Notes* to check which features are included.
+
+![Release notes screenshot](./pics/release_notes.png)
+
+## New Feature - Fast Boot
 
 When running the official firmware, it takes 17.3 s from pressing the power button to 
 finishing application startup, 9.6 s of which are spent between power-on and
@@ -50,9 +55,9 @@ to the dramatic performance boost of LZ4 over LZW. In practice, the LZ4 compress
 Not only is this a quality of life improvement for users, it's also a great time saver for developers
 who test firmware in the slow simulator. 
 
-# New Feature: NVSRAM Guard
+## New Feature: NVSRAM Guard
 
-# New Feature: Software Options Unlock
+## New Feature: Software Options Unlock
 
 Before v3.41, the last official release, the TDS3000 had 6 optional advanced software-only
 features that could be unlocked by purchasing a dongle. 
@@ -87,7 +92,7 @@ decoding, but it's still better than nothing.
 
 It's work in progress!
 
-# New Feature: Model Change
+## New Feature: Model Change
 
 Irrespective of their actual model number, all TDS3000 scopes use the same platform. The difference
 between a 500 MHz/5 Gsps TDS3054 and 100 MHz/1.25 Gsps TDS3014 is a front panel sticker, a value
@@ -107,12 +112,12 @@ requirements of higher models, but I doubt it: it would be unusual to have diffe
 chip that has the same name on the package. Still do this at your own risk, which applies to this
 new firmware in general anyway. And make sure to rerun SPC calibration after changing the model number.
 
-# New Feature: Tetris
+## New Feature: Tetris
 
 Some old HP oscilloscopes have a Tetris Easter egg. It seemed wrong not to have such an essential
 feature on the TDS3000, so I added it.
 
-# New Feature: Development Team Photo
+## New Feature: Development Team Photo
 
 The internal development name of the TDS3000 was originally PacMan and was later
 changed to Raptor. I know this because you can see that on the banner that's held
