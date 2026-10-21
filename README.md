@@ -57,6 +57,23 @@ who test firmware in the slow simulator.
 
 ## New Feature: NVSRAM Guard
 
+When the battery of the Dallas DS1742W dies, the real time clock (RTC) and the data in the
+SRAM becomes corrupt. On the standard firmware, this often crashes the oscilloscope after
+powering up due to a buffer overflow error.
+
+This feature has a number of integrity checks. When it detects an issue, it prints an error
+and boots up the oscilloscope with reasonable default values.
+
+![NVSRAM Corrupt!](./pics/version_nvsram_corrupt.png)
+
+### Development mode
+
+Developmenet versions of NVSRAM guard have a *secret* test menu that can deliberalty
+corrupt the NVSRAM. When the Version status screen is active, press the "Select" 
+button 4 times in a row and a "Test" menu button will appear.
+
+![NVSRAM test menu](./pics/ncvsram_test_dialog.png)
+
 ## New Feature: Software Options Unlock
 
 Before v3.41, the last official release, the TDS3000 had 6 optional advanced software-only
@@ -84,38 +101,13 @@ If the protection mechanism is that simple, the software can't be much more comp
 indeed, it's not. The new firmware permanently enables the 4 remaining locked software
 options. Enjoy!
 
-# Coming Soon: Serial Protocol Decoders
-
-Modern oscilloscopes have built-in protocol decoders for I2C, RS-232, and SPI. The TDS3000
-has none. A maximum recording depth of 10000 samples is not ideal for low bitrate protocol
-decoding, but it's still better than nothing.
-
-It's work in progress!
-
-## New Feature: Model Change
-
-Irrespective of their actual model number, all TDS3000 scopes use the same platform. The difference
-between a 500 MHz/5 Gsps TDS3054 and 100 MHz/1.25 Gsps TDS3014 is a front panel sticker, a value
-in the non-volatile data section of the flash, and some calibration parameters. 
-
-Before the firmware version v3.41, it was possible to change the model number and thus the associated
-specification over GPIB with the PITBULL command. v3.41 removed that, so you had to go downgrade the
-scope firmware to upgrade the model number and then upgrade the scope firmware back to v3.41.
-
-Not anymore! The new firmware adds a way to change the model number with a simple menu. To make sure
-your toddler doesn't accidentally do this by mashing random buttons, this menu button is hidden
-by default. You must press the Select button 4 times in a row when you're in the XXX menu to make
-it appear.
-
-A word of caution: it is *possible* that lower spec model are using ASICs that didn't pass the testing 
-requirements of higher models, but I doubt it: it would be unusual to have different parameters for a 
-chip that has the same name on the package. Still do this at your own risk, which applies to this
-new firmware in general anyway. And make sure to rerun SPC calibration after changing the model number.
 
 ## New Feature: Tetris
 
 Some old HP oscilloscopes have a Tetris Easter egg. It seemed wrong not to have such an essential
 feature on the TDS3000, so I added it.
+
+![Tetris screenshot](./pics/tetris.png)
 
 ## New Feature: Development Team Photo
 
@@ -126,6 +118,8 @@ firmware has a function that is dedicated only to decompressing this PNG image a
 it on screen, but there are no other functions to be found that call it.
 
 To correct this injustice, I've added a menu button that calls this function.
+
+[Dev Team Photo](./pics/dev_team_photo_full_screen.png)
 
 # Removed Feature: Russian 
 
@@ -150,5 +144,33 @@ space that don't seem to be referenced by any code.
 
 But you'd need quite a bit testing to be sure that those regions are never used, unlike the language
 asset buffer which is obviously sized for the largest language asset. So out goes Russian...
+
+# Coming Soon: Serial Protocol Decoders
+
+Modern oscilloscopes have built-in protocol decoders for I2C, RS-232, and SPI. The TDS3000
+has none. A maximum recording depth of 10000 samples is not ideal for low bitrate protocol
+decoding, but it's still better than nothing.
+
+It's work in progress!
+
+## Coming Soon: Feature: Model Change
+
+Irrespective of their actual model number, all TDS3000 scopes use the same platform. The difference
+between a 500 MHz/5 Gsps TDS3054 and 100 MHz/1.25 Gsps TDS3014 is a front panel sticker, a value
+in the non-volatile data section of the flash, and some calibration parameters. 
+
+Before the firmware version v3.41, it was possible to change the model number and thus the associated
+specification over GPIB with the PITBULL command. v3.41 removed that, so you had to go downgrade the
+scope firmware to upgrade the model number and then upgrade the scope firmware back to v3.41.
+
+Not anymore! The new firmware adds a way to change the model number with a simple menu. To make sure
+your toddler doesn't accidentally do this by mashing random buttons, this menu button is hidden
+by default. You must press the Select button 4 times in a row when you're in the XXX menu to make
+it appear.
+
+A word of caution: it is *possible* that lower spec model are using ASICs that didn't pass the testing 
+requirements of higher models, but I doubt it: it would be unusual to have different parameters for a 
+chip that has the same name on the package. Still do this at your own risk, which applies to this
+new firmware in general anyway. And make sure to rerun SPC calibration after changing the model number.
 
 
