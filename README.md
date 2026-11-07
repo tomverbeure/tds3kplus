@@ -57,7 +57,7 @@ who test firmware in the slow simulator.
 
 ## New Feature: NVSRAM Guard
 
-When the battery of the Dallas DS1742W dies, the real time clock (RTC) and the data in the
+When the battery of the Dallas DS-1742W dies, the real time clock (RTC) and the data in the
 SRAM becomes corrupt. On the standard firmware, this often crashes the oscilloscope after
 powering up due to a buffer overflow error.
 
@@ -65,14 +65,6 @@ This feature has a number of integrity checks. When it detects an issue, it prin
 and boots up the oscilloscope with reasonable default values.
 
 ![NVSRAM Corrupt!](./pics/version_nvsram_corrupt.png)
-
-### Development mode
-
-Developmenet versions of NVSRAM guard have a *secret* test menu that can deliberalty
-corrupt the NVSRAM. When the Version status screen is active, press the "Select" 
-button 4 times in a row and a "Test" menu button will appear.
-
-![NVSRAM test menu](./pics/nvsram_test_dialog.png)
 
 ## New Feature: Software Options Unlock
 
@@ -101,6 +93,20 @@ If the protection mechanism is that simple, the software can't be much more comp
 indeed, it's not. The new firmware permanently enables the 4 remaining locked software
 options. Enjoy!
 
+## New Feature: Model Change
+
+Irrespective of their actual model number, all TDS3000(B) scopes use the same hardware platform. 
+The difference between a 500 MHz/5 Gsps TDS3054 and 100 MHz/1.25 Gsps TDS3014 is a front panel 
+sticker, a value in the non-volatile data section of the flash, and maybe some calibration parameters. 
+
+Before firmware version v3.41, it was possible to change the model number and thus the associated
+specifications over GPIB with the PITBULL command. v3.41 removed that, forcing you to go downgrade the
+scope firmware, upgrade the model number, and then upgrade the scope firmware back to v3.41.
+
+Not anymore! The new firmware adds a menu to change the model number with a simple menu. 
+
+A word of caution: it is *possible* that lower spec model are using ASICs that didn't pass the testing 
+requirements of higher models. I'm not aware of anyone seeing this in the real world.
 
 ## New Feature: Tetris
 
@@ -121,29 +127,20 @@ To correct this injustice, I've added a menu button that calls this function.
 
 [Dev Team Photo](./pics/dev_team_photo_full_screen.png)
 
+*The development team photo is not present in all TDS3000(B) oscilloscopes. When not
+ present, the menu option disappears.*
+
 # Removed Feature: Russian 
 
-The uncompressed code and data of new features must be located somewhere. One option is to put 
-code uncompressed in flash and execute it directly from there. I currently don't use this method,
-but it's really not a bad idea: reads from flash are slower (80ns per 32-bit fetch) than DRAM 
-(XXns per 32-bit fetch), but most of the new features are not performance critical and the 4KB instruction 
-cache goes a long way to work around that. 
+The uncompressed code and data of new features must be located somewhere. Russian language
+support had to go to free up space. 
 
-But we also need additional data buffers. In an embedded system with real-time requirements, 
-it's common to statically allocate large buffers up front. The official firmware reserves a 96 KB buffer
-for language assets: fonts, strings, graphics. These assets are stored in compressed format in flash 
-and are decompressed and copied to that buffer on-the-fly. The size of the buffer is determined by 
-the largest language asset, which happens to be Russian. It's remarkable that the second largest asset,
-Japanese, is only 50 KB with more languages following closely behind. Disabling Russian as an option 
-thus frees up 45 KB, enough for the new code and data.
-
-There are definitely alternatives: the VxWorks RTOS of the firmware contains an interactive console for 
-which input has been disabled. Similarly, there is a disabled PowerPC disassembler and even a microcode
-disassembler for the Waveform Processing Unit (WPU) "shaders". And there are stretches of address
-space that don't seem to be referenced by any code. 
-
-But you'd need quite a bit testing to be sure that those regions are never used, unlike the language
-asset buffer which is obviously sized for the largest language asset. So out goes Russian...
+The official firmware reserves a 96 KB buffer for language assets: fonts, strings, graphics. 
+These assets are stored in compressed format in flash and are decompressed and copied to that 
+buffer on-the-fly. The size of the buffer is determined by the largest language asset, which 
+happens to be Russian. It's remarkable that the second largest asset, Japanese, is only 50 KB 
+with more languages following closely behind. Disabling Russian as an option thus frees up 45 KB, 
+enough for the new code and data.
 
 # Coming Soon: Serial Protocol Decoders
 
@@ -152,25 +149,4 @@ has none. A maximum recording depth of 10000 samples is not ideal for low bitrat
 decoding, but it's still better than nothing.
 
 It's work in progress!
-
-## Coming Soon: Feature: Model Change
-
-Irrespective of their actual model number, all TDS3000 scopes use the same platform. The difference
-between a 500 MHz/5 Gsps TDS3054 and 100 MHz/1.25 Gsps TDS3014 is a front panel sticker, a value
-in the non-volatile data section of the flash, and some calibration parameters. 
-
-Before the firmware version v3.41, it was possible to change the model number and thus the associated
-specification over GPIB with the PITBULL command. v3.41 removed that, so you had to go downgrade the
-scope firmware to upgrade the model number and then upgrade the scope firmware back to v3.41.
-
-Not anymore! The new firmware adds a way to change the model number with a simple menu. To make sure
-your toddler doesn't accidentally do this by mashing random buttons, this menu button is hidden
-by default. You must press the Select button 4 times in a row when you're in the XXX menu to make
-it appear.
-
-A word of caution: it is *possible* that lower spec model are using ASICs that didn't pass the testing 
-requirements of higher models, but I doubt it: it would be unusual to have different parameters for a 
-chip that has the same name on the package. Still do this at your own risk, which applies to this
-new firmware in general anyway. And make sure to rerun SPC calibration after changing the model number.
-
 
